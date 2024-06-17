@@ -24,7 +24,7 @@ class VariationalAutoEncoder(nn.Module):
 
     def decoder(self, z):
         # p_theta(x|z)
-        h = self.relu(self.img_2hid(z))
+        h = self.relu(self.z_2hid(z))
         return torch.sigmoid(self.hid_2img(h))
 
     def forward(self, x):
@@ -34,7 +34,10 @@ class VariationalAutoEncoder(nn.Module):
         x_reconstructed = self.decoder(z_reparametrized)
         return x_reconstructed, mu, sigmoid
 
-if __name__ == "__main__"
-    x = torch.randn(1, 784)
-    vae = VariationalAutoEncoder()
-    print(vae(x).shape)
+if __name__ == "__main__":
+    x = torch.randn(4,28*28)
+    vae = VariationalAutoEncoder(input_dim=784)
+    x_reconstructed, mu, sigmoid = vae(x)
+    print(mu.shape)
+    print(sigmoid.shape)
+    print(x_reconstructed.shape)
