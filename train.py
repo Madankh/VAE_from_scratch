@@ -11,7 +11,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 INPUT_DIM = 28*28
 H_DIM = 200
 Z_DIM = 20
-NUM_EPOCHS = 10
+NUM_EPOCHS = 10000
 BATCH_SIZE = 32
 LR_RATE = 3e-4 # learning rate
 
@@ -41,3 +41,4 @@ for epoch in range(NUM_EPOCHS):
 
         loop.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
         loop.set_postfix(loss=loss.item())
+    print(f"Epoch [{epoch+1}/{NUM_EPOCHS}], Loss: {loss.item()}")
