@@ -67,3 +67,20 @@ class Decoder(nn.Module):
         x_hat = torch.sigmoid(hidden)
         return x_hat
     
+class Model(nn.Module):
+    def __init__(self , Encoder, Decoder):
+        super(Model).__init__()
+        self.encoder = Encoder()
+        self.decoder = Decoder()
+    def reparametarize(self, mean , variance):
+        eplions = torch.randn_like(variance)
+        z = mean + variance * eplions
+        return z
+    def forward(self, x):
+        mean, log_variance = self.encoder(x)
+        z = self.reparametarize(mean , torch.exp(0.5 * log_variance))
+        x_hat = self.decoder(z)
+        return x_hat, mean , log_variance
+# encoder = Encoder
+        
+    
